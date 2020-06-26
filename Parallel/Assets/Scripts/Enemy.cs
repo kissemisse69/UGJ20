@@ -2,17 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
+public class Enemy : MonoBehaviour {
+
+    [SerializeField]
+    Sprite dim1, dim2;
+
+    void Start() {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    
+    void Update() {
         
+    }
+
+    public void ChangeSprite(bool changeToDim2) {
+        if(changeToDim2) { // change to dim 2
+            GetComponent<SpriteRenderer>().sprite = dim2;
+        } else { // change to dim 1
+            GetComponent<SpriteRenderer>().sprite = dim1;
+        }
     }
 }

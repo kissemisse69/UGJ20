@@ -17,6 +17,6 @@ public class PickUp : MonoBehaviour
     }
 
     public int Value {
-        get { return Value; }
+        get { return value; }
     }
 }

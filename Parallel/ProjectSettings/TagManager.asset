@@ -7,6 +7,8 @@ TagManager:
   - Static Objects
   - Armour
   - Health
+  - Changable Objects
+  - Enemy
   layers:
   - Default
   - TransparentFX
