@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -7,10 +8,17 @@ public class Player : MonoBehaviour {
     bool inDim1 = true;
 
     [SerializeField]
-    Material dim1mat, dim2mat;
+    int maxHealth;
+
+    [SerializeField]
+    int maxArmour;
+
+    int health;
+    int armour;
 
     void Start() {
-        
+        health = maxHealth;
+        armour = maxArmour;
     }
 
     void Update() {
@@ -22,25 +30,51 @@ public class Player : MonoBehaviour {
     }
 
     void ChangeDimension() {
-        if(inDim1) { // change to dim2
-            foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Static Objects")) {
-                // static objects like ground and walls
-                obj.GetComponent<MaterialChange>().ChangeMaterial(true);
+
+            if(GameObject.FindGameObjectWithTag("Static Objects") != null) {
+                GameObject[] objs = GameObject.FindGameObjectsWithTag("Static Objects");
+                foreach(GameObject obj in objs) {
+                    obj.GetComponent<MaterialChange>().ChangeMaterial(!inDim1);
+                }
             }
 
-            foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Changable Objects")) {
-                // object that change depending on dimensions
+            if(GameObject.FindGameObjectWithTag("Changable Objects") != null) {
+                GameObject[] objs = GameObject.FindGameObjectsWithTag("Changable Objects");
+                foreach(GameObject obj in objs) {
+                    obj.GetComponent<MaterialChange>().ChangeMaterial(!inDim1);
+                }
             }
 
-            foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
-                // enemies
-
+            if(GameObject.FindGameObjectWithTag("Enemy") != null) {
+                GameObject[] objs = GameObject.FindGameObjectsWithTag("Enemy");
+                foreach(GameObject obj in objs) {
+                    obj.GetComponent<SpriteChange>().ChangeSprite(!inDim1);
+                }
             }
 
-            inDim1 = false;
+            inDim1 = !inDim1;
+    }
 
-        } else { // change to dim1
+    private void OnTriggerEnter(Collider collider) {
+        tag = collider.gameObject.transform.tag;
+        switch(tag) {
+            case "Armour":
+                if(armour < maxArmour) {
+                    armour += collider.gameObject.GetComponent<PickUp>().Value;
+                    if(armour > maxArmour) armour = maxArmour;
+                    Destroy(collider.gameObject);
+                }
+                break;
+            case "Health":
+                if(health < maxHealth) {
+                    health += collider.gameObject.GetComponent<PickUp>().Value;
+                    if(health > maxHealth) health = maxHealth;
+                    Destroy(collider.gameObject);
+                }
+                break;
 
+            default:
+                break;
         }
     }
 }
