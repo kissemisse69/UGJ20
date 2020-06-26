@@ -151,7 +151,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
@@ -173,7 +173,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ce1c6810ce16fe94da4c038feb8d3216, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -228,6 +228,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00dacb812043d3d4da4e7251171c2358, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dim1: {fileID: 2100000, guid: ce1c6810ce16fe94da4c038feb8d3216, type: 2}
+  dim2: {fileID: 2100000, guid: 6159414ee58e4f64e96d0151829eeaaf, type: 2}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,6 +432,7 @@ GameObject:
   - component: {fileID: 5138864583334424854}
   - component: {fileID: 5138864583334424851}
   - component: {fileID: 5138864583334424853}
+  - component: {fileID: 5138864583334424852}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -456,6 +459,20 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &5138864583334424852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5138864583334424850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 465bd179410d8304095c8f0c0e179fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dim1mat: {fileID: 0}
+  dim2mat: {fileID: 0}
 --- !u!143 &5138864583334424853
 CharacterController:
   m_ObjectHideFlags: 0
