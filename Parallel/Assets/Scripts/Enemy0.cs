@@ -22,8 +22,9 @@ public class Enemy0 : MonoBehaviour {
 
     // ai stuff
     [SerializeField]
-    float detectionRange, shootRange;
+    float avoidRange, shootRange;
     GameObject player;
+    bool atLocation = true;
 
     void Start() {
         _spriteRenderer = GetComponent<SpriteRenderer>(); if(_spriteRenderer == null) Debug.Log("No Sprite Renderer Found " + gameObject.name);
@@ -36,11 +37,26 @@ public class Enemy0 : MonoBehaviour {
         transform.LookAt(player.transform); // always look at player
 
         if(mode1) { // mode 1
-            if(Vector3.Distance(transform.position, player.transform.position) > shootRange) {
-                float distanceToShootRange = Vector3.Distance(transform.position, player.transform.position) - shootRange;
-                _agent.destination = new Vector3(transform.position.x, transform.position.y, transform.position.z + distanceToShootRange);
+            float distanceToShootRange = Vector3.Distance(transform.position, player.transform.position) - shootRange;
+            
+            if(Vector3.Distance(transform.position, player.transform.position) > shootRange && atLocation) {
+                //_agent.destination = transform.TransformPoint(transform.position) + transform.forward * distanceToShootRange;
+                _agent.destination = transform.TransformPoint(player.transform.position.x + Random.Range(-shootRange, shootRange), player.transform.position.y, player.transform.position.y + Random.Range(-shootRange, shootRange));
+                atLocation = false;
+
+            } else if(Vector3.Distance(transform.position, player.transform.position) < avoidRange && atLocation) {
+                _agent.destination = transform.position + transform.forward * Random.Range(-3, -6);
+                atLocation = false;
+            }
+            
+
+            if(Vector3.Distance(transform.position, player.transform.position) < shootRange && Vector3.Distance(transform.position, player.transform.position) > avoidRange) {
                 Debug.Log("Shoot!");
             }
+            
+
+            if(Vector3.Distance(_agent.destination, transform.position) < 3) atLocation = true;
+
         } else { // mode 2
 
         }
