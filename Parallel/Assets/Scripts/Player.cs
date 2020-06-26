@@ -46,9 +46,10 @@ public class Player : MonoBehaviour {
             }
 
             if(GameObject.FindGameObjectWithTag("Enemy") != null) {
-                GameObject[] objs = GameObject.FindGameObjectsWithTag("Enemy");
-                foreach(GameObject obj in objs) {
-                    obj.GetComponent<SpriteChange>().ChangeSprite(!inDim1);
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+                foreach(GameObject enemy in enemies) {
+                    enemy.GetComponent<SpriteChange>().ChangeSprite(!inDim1);
+                    // will probably have to change above ^
                 }
             }
 
