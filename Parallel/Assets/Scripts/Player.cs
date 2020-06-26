@@ -48,8 +48,8 @@ public class Player : MonoBehaviour {
             if(GameObject.FindGameObjectWithTag("Enemy") != null) {
                 GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
                 foreach(GameObject enemy in enemies) {
-                    enemy.GetComponent<SpriteChange>().ChangeSprite(!inDim1);
-                    // will probably have to change above ^
+                    //enemy.GetComponent<SpriteChange>().ChangeSprite(!inDim1);
+                    // will probably have to change above ^ (change mode not sprites)
                 }
             }
 
