@@ -28,6 +28,8 @@ public class Enemy1 : MonoBehaviour {
     bool atLocation = true;
     bool canFire = true;
     bool isUp = true;
+    bool ongoingRoutine;
+    bool onCooldown;
 
     void Start() {
         _spriteRenderer = GetComponent<SpriteRenderer>(); if(_spriteRenderer == null) Debug.Log("No sprite renderer found on " + name);
@@ -37,22 +39,22 @@ public class Enemy1 : MonoBehaviour {
 
         player.GetComponent<Player>().changeMode.AddListener(ChangeMode);
     }
- 
+
     void Update() {
         transform.LookAt(player.transform);
 
         if(atLocation) {
-            if(isUp) { // is up
+            if(isUp && !ongoingRoutine) { // is up
                 if(Vector3.Distance(transform.position, player.transform.position) > shootRange) {
                     StartCoroutine("GoDown");
                 } else if(Vector3.Distance(transform.position, player.transform.position) < avoidRange) {
                     StartCoroutine("GoDown");
                 } else {
-                    if(canFire) Attack();
+                    if(canFire && !onCooldown) Attack();
                     Debug.Log("vibing");
                 }
 
-            } else { // is down
+            } else if(!ongoingRoutine) { // is down
                 StartCoroutine("GoUp");
             }
 
@@ -64,23 +66,27 @@ public class Enemy1 : MonoBehaviour {
     }
 
     IEnumerator GoUp() {
+        ongoingRoutine = true;
         Debug.Log("Go up");
         _ani.SetBool("Down", false);
         _agent.isStopped = true;
-        yield return new WaitForSeconds(GetComponent<Animator>().GetAnimatorTransitionInfo(0).duration);
+        yield return new WaitForSeconds(2);
         isUp = true;
         canFire = true;
+        ongoingRoutine = false;
     }
 
     IEnumerator GoDown() {
+        ongoingRoutine = true;
         Debug.Log("Go down");
         _ani.SetBool("Down", true);
         atLocation = false;
         isUp = false;
         canFire = false;
-        yield return new WaitForSeconds(GetComponent<Animator>().GetAnimatorTransitionInfo(0).duration);
+        yield return new WaitForSeconds(2);
         _agent.isStopped = false;
         _agent.destination = transform.TransformPoint(player.transform.position.x + Random.Range(-shootRange, shootRange), 0, player.transform.position.z + Random.Range(-shootRange, shootRange));
+        ongoingRoutine = false;
     }
 
     public void ChangeMode() {

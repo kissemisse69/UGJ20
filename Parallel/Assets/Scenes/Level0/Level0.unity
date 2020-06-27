@@ -479,7 +479,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 4278863114643027105, guid: 9bc2b38c3ed6514499ca349daaa8eea9,
     type: 3}
   avoidRange: 5
-  shootRange: 10
+  shootRange: 6
 --- !u!1 &520162290 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1444383464032411159, guid: c7f0219fc97cd6f4cb5243f28370f3f4,
@@ -2234,6 +2234,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2654484764566700731, guid: 720f49ccf0f1bd246bb3079b31fd5c87,
+        type: 3}
+      propertyPath: m_Speed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8560307275416723089, guid: 720f49ccf0f1bd246bb3079b31fd5c87,
         type: 3}
