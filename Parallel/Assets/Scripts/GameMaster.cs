@@ -28,6 +28,7 @@ public class GameMaster : MonoBehaviour {
         Time.timeScale = 0;
         foreach(GameObject ob in showOnGameOver) ob.SetActive(true);
     }
+
     public void Pause() {
         if(Time.timeScale == 1) {
             Time.timeScale = 0;

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Enemy1 : MonoBehaviour {
 
     [SerializeField]
-    float speed;
+    float speed, downSpeed;
     [SerializeField]
     int cooldown, hp;
 
@@ -27,7 +27,7 @@ public class Enemy1 : MonoBehaviour {
     GameObject player;
     bool atLocation = true;
     bool canFire = true;
-    bool isUp;
+    bool isUp = true;
 
     void Start() {
         _spriteRenderer = GetComponent<SpriteRenderer>(); if(_spriteRenderer == null) Debug.Log("No sprite renderer found on " + name);
@@ -46,34 +46,41 @@ public class Enemy1 : MonoBehaviour {
                 if(Vector3.Distance(transform.position, player.transform.position) > shootRange) {
                     StartCoroutine("GoDown");
                 } else if(Vector3.Distance(transform.position, player.transform.position) < avoidRange) {
-                    StartCoroutine("GoUp");
+                    StartCoroutine("GoDown");
                 } else {
                     if(canFire) Attack();
+                    Debug.Log("vibing");
                 }
 
             } else { // is down
-                GoUp();
+                StartCoroutine("GoUp");
             }
 
         } else {
-            if(Vector3.Distance(transform.position, player.transform.position) < 3) {
+            if(Vector3.Distance(transform.position, _agent.destination) < 3) {
                 atLocation = true;
             }
         }
     }
 
     IEnumerator GoUp() {
-        // TODO set animation
-        yield return new WaitForSeconds(GetComponent<Animation>().GetClip("GoingUp").length);
+        Debug.Log("Go up");
+        _ani.SetBool("Down", false);
+        _agent.isStopped = true;
+        yield return new WaitForSeconds(GetComponent<Animator>().GetAnimatorTransitionInfo(0).duration);
         isUp = true;
+        canFire = true;
     }
 
     IEnumerator GoDown() {
-        // TODO set animation
+        Debug.Log("Go down");
+        _ani.SetBool("Down", true);
         atLocation = false;
         isUp = false;
-        yield return new WaitForSeconds(GetComponent<Animation>().GetClip("GoingDown").length);
-        _agent.destination = transform.TransformPoint(player.transform.position.x + Random.Range(-shootRange, shootRange), player.transform.position.y, player.transform.position.y + Random.Range(-shootRange, shootRange));
+        canFire = false;
+        yield return new WaitForSeconds(GetComponent<Animator>().GetAnimatorTransitionInfo(0).duration);
+        _agent.isStopped = false;
+        _agent.destination = transform.TransformPoint(player.transform.position.x + Random.Range(-shootRange, shootRange), 0, player.transform.position.z + Random.Range(-shootRange, shootRange));
     }
 
     public void ChangeMode() {
