@@ -38,7 +38,7 @@ public class Enemy0 : MonoBehaviour {
     }
 
     void Update() {
-        transform.LookAt(player.transform); // always look at player (camera)
+        if(player != null) transform.LookAt(player.transform); // always look at player (camera)
         if(alive) {
             if(mode1) { // mode 1
                 _ani.SetTrigger("Mode1");
@@ -76,7 +76,7 @@ public class Enemy0 : MonoBehaviour {
         }
 
         // test
-        if(Input.GetKeyDown(KeyCode.K)) hp = 0;
+        //if(Input.GetKeyDown(KeyCode.K)) hp = 0;
     }
 
     IEnumerator AttackCooldown() {
