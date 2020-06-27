@@ -69,14 +69,6 @@ public class Enemy0 : MonoBehaviour {
                 } else if(Vector3.Distance(_agent.destination, transform.position) < 3) atLocation = true;
             }
         }
-
-        // remove?
-        if(hp <= 0) {
-            Die();
-        }
-
-        // test
-        //if(Input.GetKeyDown(KeyCode.K)) hp = 0;
     }
 
     IEnumerator AttackCooldown() {
@@ -98,8 +90,10 @@ public class Enemy0 : MonoBehaviour {
     void Die() {
         // TODO tell room director that your dead
         _agent.isStopped = true;
+        _agent.destination = transform.position;
         _ani.SetBool("Dead", true);
         alive = false;
+        GetComponent<Collider>().enabled = false;
     }
 
     private void OnTriggerEnter(Collider other) {

@@ -54,7 +54,8 @@ public class Player : MonoBehaviour {
         }
 
         foreach(GameObject projectile in GameObject.FindGameObjectsWithTag("Enemy Projectile")) {
-            Destroy(projectile);
+            if(projectile.name != "Player")
+                Destroy(projectile);
         }
 
         if(changeMode == null) changeMode = new UnityEvent();
@@ -97,7 +98,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void TakeDmg(int dmg) {
+    public void TakeDmg(int dmg) {
         armour -= dmg;
         if(armour < 0) {
             health += armour;
