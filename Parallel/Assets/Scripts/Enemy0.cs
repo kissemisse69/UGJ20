@@ -38,7 +38,7 @@ public class Enemy0 : MonoBehaviour {
     }
 
     void Update() {
-        transform.LookAt(Camera.main.transform); // always look at camera
+        transform.LookAt(player.transform); // always look at player (camera)
         if(alive) {
             if(mode1) { // mode 1
                 _ani.SetTrigger("Mode1");
@@ -94,7 +94,7 @@ public class Enemy0 : MonoBehaviour {
     }
 
     void Die() {
-        // tell room director that your dead
+        // TODO tell room director that your dead
         _agent.isStopped = true;
         _ani.SetBool("Dead", true);
         alive = false;
