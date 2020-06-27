@@ -65,9 +65,9 @@ public class Enemy0 : MonoBehaviour {
                     atLocation = false;
                 } else if(Vector3.Distance(_agent.destination, transform.position) < 3) atLocation = true;
             }
-
         }
 
+        // remove?
         if(hp <= 0) {
             Die();
         }
@@ -105,6 +105,7 @@ public class Enemy0 : MonoBehaviour {
             case "Player Projectile":
                 if(mode1) {
                     hp -= other.GetComponent<Projectile>().dmg;
+                    if(hp <= 0) Die();
                 }
                 Destroy(other.gameObject);
                 break;

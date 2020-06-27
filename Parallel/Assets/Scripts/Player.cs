@@ -81,11 +81,20 @@ public class Player : MonoBehaviour {
                 break;
 
             case "Enemy Projectile":
-                health -= collider.GetComponent<Projectile>().dmg;
+                TakeDmg(collider.GetComponent<Projectile>().dmg);
                 break;
 
             default:
                 break;
+        }
+    }
+
+    private void TakeDmg(int dmg) {
+        armour -= dmg;
+        if(armour < 0) {
+            health += armour;
+            armour = 0;
+            //if (health <= 0) GameObject.Find("GameMaster").GameOver();
         }
     }
 }
