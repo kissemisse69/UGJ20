@@ -20,6 +20,7 @@ public class Enemy1 : MonoBehaviour {
     SpriteRenderer _spriteRenderer;
     Animator _ani;
     NavMeshAgent _agent;
+    Collider collider;
 
     // ai stuff
     [SerializeField]
@@ -36,6 +37,7 @@ public class Enemy1 : MonoBehaviour {
         _ani = GetComponent<Animator>(); if(_ani == null) Debug.Log("No animator found on " + name);
         _agent = GetComponent<NavMeshAgent>(); if(_agent == null) Debug.Log("No navmeshagent found on " + name);
         player = GameObject.FindGameObjectWithTag("Player"); if(player == null) Debug.Log("No player found on " + name);
+        collider = GetComponent<Collider>(); if(collider == null) Debug.Log("No collider found on " + name);
 
         player.GetComponent<Player>().changeMode.AddListener(ChangeMode);
     }
@@ -43,31 +45,33 @@ public class Enemy1 : MonoBehaviour {
     void Update() {
         transform.LookAt(player.transform);
 
-        if(atLocation) {
-            if(isUp && !ongoingRoutine) { // is up
-                if(Vector3.Distance(transform.position, player.transform.position) > shootRange) {
-                    StartCoroutine("GoDown");
-                } else if(Vector3.Distance(transform.position, player.transform.position) < avoidRange) {
-                    StartCoroutine("GoDown");
-                } else {
-                    if(canFire && !onCooldown) Attack();
-                    Debug.Log("vibing");
+        if(alive) {
+            if(atLocation) {
+                if(isUp && !ongoingRoutine) { // is up
+                    if(Vector3.Distance(transform.position, player.transform.position) > shootRange) {
+                        StartCoroutine("GoDown");
+                    } else if(Vector3.Distance(transform.position, player.transform.position) < avoidRange) {
+                        StartCoroutine("GoDown");
+                    } else {
+                        if(canFire && !onCooldown) Attack();
+                        Debug.Log("vibing");
+                    }
+
+                } else if(!ongoingRoutine) { // is down
+                    StartCoroutine("GoUp");
                 }
 
-            } else if(!ongoingRoutine) { // is down
-                StartCoroutine("GoUp");
-            }
-
-        } else {
-            if(Vector3.Distance(transform.position, _agent.destination) < 3) {
-                atLocation = true;
+            } else {
+                if(Vector3.Distance(transform.position, _agent.destination) < 3) {
+                    atLocation = true;
+                }
             }
         }
     }
 
     IEnumerator GoUp() {
+        collider.enabled = true;
         ongoingRoutine = true;
-        Debug.Log("Go up");
         _ani.SetBool("Down", false);
         _agent.isStopped = true;
         yield return new WaitForSeconds(2);
@@ -78,7 +82,6 @@ public class Enemy1 : MonoBehaviour {
 
     IEnumerator GoDown() {
         ongoingRoutine = true;
-        Debug.Log("Go down");
         _ani.SetBool("Down", true);
         atLocation = false;
         isUp = false;
@@ -87,6 +90,7 @@ public class Enemy1 : MonoBehaviour {
         _agent.isStopped = false;
         _agent.destination = transform.TransformPoint(player.transform.position.x + Random.Range(-shootRange, shootRange), 0, player.transform.position.z + Random.Range(-shootRange, shootRange));
         ongoingRoutine = false;
+        collider.enabled = false;
     }
 
     public void ChangeMode() {
@@ -108,8 +112,10 @@ public class Enemy1 : MonoBehaviour {
     void Die() {
         // TODO tell room director that your dead
         _agent.isStopped = true;
+        _agent.destination = transform.position;
         _ani.SetBool("Dead", true);
         alive = false;
+        GetComponent<Collider>().enabled = false;
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -118,8 +124,10 @@ public class Enemy1 : MonoBehaviour {
                 if(isUp) {
                     hp -= other.GetComponent<Projectile>().dmg;
                     if(hp <= 0) Die();
+                    Debug.Log(hp);
+                    Destroy(other.gameObject);
                 }
-                Destroy(other.gameObject);
+                
                 break;
 
             default:

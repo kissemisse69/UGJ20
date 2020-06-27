@@ -11,10 +11,11 @@ TagManager:
   - Enemy
   - itemSpawner
   - Enemy Projectile
-  - Player Projector
   - GameMaster
   - ShowOnPause
   - ShowOnGameOver
+  - Player Projectile
+  - Player Projector
   layers:
   - Default
   - TransparentFX
