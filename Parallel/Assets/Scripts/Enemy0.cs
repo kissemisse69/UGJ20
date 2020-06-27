@@ -49,14 +49,17 @@ public class Enemy0 : MonoBehaviour {
                         _agent.destination = transform.TransformPoint(player.transform.position.x + Random.Range(-shootRange, shootRange), player.transform.position.y, player.transform.position.y + Random.Range(-shootRange, shootRange));
                         atLocation = false;
                     } 
-                    if(canFire) Attack();
 
                 } else if(Vector3.Distance(transform.position, player.transform.position) < avoidRange && atLocation) {
                     _agent.destination = transform.position + transform.forward * Random.Range(-3, -6);
                     atLocation = false;
-                }
+                } 
 
                 if(Vector3.Distance(_agent.destination, transform.position) < 3) atLocation = true;
+
+                if(Vector3.Distance(transform.position, player.transform.position) > avoidRange && Vector3.Distance(transform.position, player.transform.position) < shootRange) {
+                    if(canFire) Attack();
+                }
 
             } else { // mode 2
                 _ani.SetTrigger("Mode2");
@@ -90,7 +93,6 @@ public class Enemy0 : MonoBehaviour {
 
     public void ChangeMode() {
         mode1 = !mode1;
-        Debug.Log("f");
     }
 
     void Die() {

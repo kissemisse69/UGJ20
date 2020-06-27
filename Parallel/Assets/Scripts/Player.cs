@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -52,6 +53,10 @@ public class Player : MonoBehaviour {
             }
         }
 
+        foreach(GameObject projectile in GameObject.FindGameObjectsWithTag("Enemy Projectile")) {
+            Destroy(projectile);
+        }
+
         if(changeMode == null) changeMode = new UnityEvent();
         changeMode.Invoke();
 
@@ -60,6 +65,9 @@ public class Player : MonoBehaviour {
 
     void Death() {
         // Game over n shit
+        // TODO game director game over
+        Debug.Log("DEAD");
+        GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>().GameOver();
     }
 
     private void OnTriggerEnter(Collider collider) {
@@ -94,7 +102,7 @@ public class Player : MonoBehaviour {
         if(armour < 0) {
             health += armour;
             armour = 0;
-            //if (health <= 0) GameObject.Find("GameMaster").GameOver();
+            if(health <= 0) Death();
         }
     }
 }

@@ -401,7 +401,8 @@ MonoBehaviour:
   - Assets/Bakery/examples/content/sponza/bush.FBX
   - Assets/Bakery/examples/content/floor_lamp.FBX
   - Assets/3D Graphics/Level/First level prototype v.2.fbx_Scene.fbx
-  uvOverlapAssetList: 00000000ffffffff01010000
+  - Assets/3D Graphics/Level/First stage.V3.fbx
+  uvOverlapAssetList: 00000000ffffffff0101000001010000
   xatlasWarningShown: 0
   checkerPreviewOn: 0
   rtSceneViewPreviewOn: 0

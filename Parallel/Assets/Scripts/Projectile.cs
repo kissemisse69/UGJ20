@@ -20,8 +20,8 @@ public class Projectile : MonoBehaviour {
     }
 
     private void Update() {
-        transform.GetChild(0).transform.LookAt(Camera.main.transform);
-        
+        if(transform.childCount > 0)
+            transform.GetChild(0).transform.LookAt(Camera.main.transform); 
     }
 
     IEnumerator DestroyTimer() {
@@ -30,6 +30,10 @@ public class Projectile : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
+        Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter(Collision collision) {
         Destroy(gameObject);
     }
 }

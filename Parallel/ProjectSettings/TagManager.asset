@@ -12,6 +12,9 @@ TagManager:
   - itemSpawner
   - Enemy Projectile
   - Player Projector
+  - GameMaster
+  - ShowOnPause
+  - ShowOnGameOver
   layers:
   - Default
   - TransparentFX
