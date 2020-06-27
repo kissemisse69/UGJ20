@@ -54,7 +54,6 @@ public class Enemy1 : MonoBehaviour {
                         StartCoroutine("GoDown");
                     } else {
                         if(canFire && !onCooldown) Attack();
-                        Debug.Log("vibing");
                     }
 
                 } else if(!ongoingRoutine) { // is down
@@ -74,7 +73,7 @@ public class Enemy1 : MonoBehaviour {
         ongoingRoutine = true;
         _ani.SetBool("Down", false);
         _agent.isStopped = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length + (float)0.2);
         isUp = true;
         canFire = true;
         ongoingRoutine = false;
@@ -86,7 +85,7 @@ public class Enemy1 : MonoBehaviour {
         atLocation = false;
         isUp = false;
         canFire = false;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length + (float)0.2);
         _agent.isStopped = false;
         _agent.destination = transform.TransformPoint(player.transform.position.x + Random.Range(-shootRange, shootRange), 0, player.transform.position.z + Random.Range(-shootRange, shootRange));
         ongoingRoutine = false;
@@ -103,7 +102,7 @@ public class Enemy1 : MonoBehaviour {
     }
 
     void Attack() {
-        GameObject fireball = Instantiate(projectilePrefab, transform.position, transform.rotation, null);
+        GameObject fireball = Instantiate(projectilePrefab, transform.position + transform.forward * 2, transform.rotation, null);
         canFire = false;
         StartCoroutine("AttackCooldown");
         _ani.SetTrigger("Attack");

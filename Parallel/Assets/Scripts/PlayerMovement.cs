@@ -25,19 +25,21 @@ public class PlayerMovement : MonoBehaviour
     LayerMask groundMask;
     bool isGrounded;
 
+    [SerializeField]
+    float jumpHeight;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
         groundCheck = transform.Find("Ground Check").transform;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    
+    void Update() {
         // Gravity & movement
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        if (isGrounded && velocity.y < 0) velocity.y = -2f;
+        if(isGrounded && velocity.y < 0) velocity.y = -2f;
 
         velocity.y += gravity * Time.deltaTime;
 
@@ -50,5 +52,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
 
         controller.Move(move * speed * Time.deltaTime);
+
+        if(isGrounded && Input.GetKeyDown(KeyCode.Space)) velocity.y = jumpHeight;
     }
 }

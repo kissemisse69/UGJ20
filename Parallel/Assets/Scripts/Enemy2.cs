@@ -17,15 +17,17 @@ public class Enemy2 : MonoBehaviour {
     int knockBack;
 
     [SerializeField]
-    float speed;
+    float speed, cooldown;
     [SerializeField]
-    int cooldown, hp;
+    int hp;
 
     bool mode1 = true;
     bool alive = true;
 
     [SerializeField]
     GameObject fireballPrefab;
+    [SerializeField]
+    float meleeDistance;
 
     // components
     SpriteRenderer _spriteRenderer;
@@ -40,11 +42,15 @@ public class Enemy2 : MonoBehaviour {
     bool canFire = true;
     bool canAttack = true;
     bool stuck = false;
+
+    RaycastHit hit;
+
     void Start() {
         _agent = GetComponent<NavMeshAgent>(); if(_agent == null) Debug.Log("No navmeshagent found on " + gameObject.name);
         player = GameObject.FindGameObjectWithTag("Player"); if(player == null) Debug.Log("No player found on " + gameObject.name);
-
+        _ani = GetComponent<Animator>(); if(_ani == null) Debug.Log("No animator found on " + gameObject.name);
         player.GetComponent<Player>().changeMode.AddListener(ChangeMode);
+        hit = new RaycastHit();
     }
 
     // Update is called once per frame
@@ -72,42 +78,58 @@ public class Enemy2 : MonoBehaviour {
                 }
             } else {
                 _agent.destination = player.transform.position;
+                Ray ray = new Ray(transform.position, transform.forward);
+                if(Physics.Raycast(ray, out hit, meleeDistance)) {
+                    if(hit.transform == player.transform) {
+                        StartCoroutine("CloseAttack");
+                    }
+                }
             }
         }
+        //Debug.DrawRay(transform.position, transform.forward, Color.red, 10);
+        //Debug.DrawLine(transform.position, transform.forward * meleeDistance);
     }
     void ChangeMode() {
         dim1 = !dim1;
     }
     void RangedAttack() {
-        GameObject fireball = Instantiate(fireballPrefab, transform.position, transform.rotation, null);
+        GameObject lazer = Instantiate(fireballPrefab, transform.position + transform.forward * 2, transform.rotation, null);
         canFire = false;
         StartCoroutine("AttackCooldown");
-
     }
     void Die() {
-        // TODO tell room director that your dead
+        // TODO tell room director that youre dead
         _agent.isStopped = true;
         _ani.SetBool("Dead", true);
         alive = false;
+        GetComponent<Collider>().enabled = false;
     }
-    IEnumerator CloseAttack() {
 
+    IEnumerator CloseAttack() {
+        _ani.SetTrigger("MeleeAttack");
         stuck = true;
         _agent.isStopped = true;
+        yield return new WaitForSeconds(.5f);
         player.GetComponent<Player>().TakeDmg(dmg);
         Vector3 knockBackVector = new Vector3(transform.forward.x, 0, transform.forward.z) * knockBack;
-        Debug.Log(knockBackVector);
+        //Debug.Log(knockBackVector);
         player.GetComponent<CharacterController>().Move(knockBackVector);
         yield return new WaitForSeconds(CloseAttackCooldown);
         _agent.isStopped = false;
         stuck = false;
     }
+
     IEnumerator AttackCooldown() {
+        yield return new WaitForSeconds(.2f);
+        GameObject lazer1 = Instantiate(fireballPrefab, transform.position + transform.forward * 2, transform.rotation, null);
+        yield return new WaitForSeconds(.2f);
+        GameObject lazer2 = Instantiate(fireballPrefab, transform.position + transform.forward * 2, transform.rotation, null);
         yield return new WaitForSeconds(cooldown);
         canFire = true;
     }
+
     private void OnTriggerEnter(Collider other) {
-        if(other.name == "Player" && canAttack && !stuck && !(dim1 && !closeDim1)) StartCoroutine("CloseAttack");
+        //if(other.name == "Player" && canAttack && !stuck && !(dim1 && !closeDim1)) StartCoroutine("CloseAttack");
         switch(other.tag) {
             case "Player Projectile":
                 if(mode1) {

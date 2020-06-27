@@ -154,8 +154,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2, y: 2.3, z: 0.5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.2, y: 2.3, z: 0.28102112}
+  m_Center: {x: 0, y: 0, z: 0.10948944}
 --- !u!114 &514659390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +172,7 @@ MonoBehaviour:
   downSpeed: 6
   cooldown: 2
   hp: 100
-  projectilePrefab: {fileID: 4278863114643027105, guid: 9bc2b38c3ed6514499ca349daaa8eea9,
+  projectilePrefab: {fileID: 3290879387490275252, guid: 9b702dff2c74cab48aa15f84f7ebcda4,
     type: 3}
   avoidRange: 5
   shootRange: 10
