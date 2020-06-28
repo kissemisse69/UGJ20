@@ -71,6 +71,15 @@ public class Player : MonoBehaviour {
         GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>().GameOver();
     }
 
+    public void TakeDmg(int dmg) {
+        armour -= dmg;
+        if(armour < 0) {
+            health += armour;
+            armour = 0;
+            if(health <= 0) Death();
+        }
+    }
+
     private void OnTriggerEnter(Collider collider) {
         tag = collider.gameObject.transform.tag;
         switch(tag) {
@@ -81,6 +90,7 @@ public class Player : MonoBehaviour {
                     Destroy(collider.gameObject);
                 }
                 break;
+
             case "Health":
                 if(health < maxHealth) {
                     health += collider.gameObject.GetComponent<PickUp>().Value;
@@ -95,15 +105,6 @@ public class Player : MonoBehaviour {
 
             default:
                 break;
-        }
-    }
-
-    public void TakeDmg(int dmg) {
-        armour -= dmg;
-        if(armour < 0) {
-            health += armour;
-            armour = 0;
-            if(health <= 0) Death();
         }
     }
 }

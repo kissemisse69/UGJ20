@@ -15,7 +15,7 @@ TagManager:
   - ShowOnPause
   - ShowOnGameOver
   - Player Projectile
-  - Player Projector
+  - enemyspawners
   layers:
   - Default
   - TransparentFX
