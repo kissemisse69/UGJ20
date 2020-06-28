@@ -77,7 +77,7 @@ public class Enemy0 : MonoBehaviour {
     }
 
     void Attack() {
-        GameObject fireball = Instantiate(fireballPrefab, transform.position, transform.rotation, null);
+        GameObject fireball = Instantiate(fireballPrefab, transform.position + transform.forward * 2, transform.rotation, null);
         canFire = false;
         StartCoroutine("AttackCooldown");
         _ani.SetTrigger("Attack");

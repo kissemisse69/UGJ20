@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 2956855689427400444}
   - component: {fileID: 2956855689427400445}
   - component: {fileID: 1270627508}
+  - component: {fileID: 789118284}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -87,13 +88,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7679a26bbb7c894399a8e41668984af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  sprintSpeed: 4.5
+  speed: 6
+  sprintSpeed: 6
   gravity: -19.62
   groundDistance: 0.4
   groundMask:
     serializedVersion: 2
     m_Bits: 256
+  jumpHeight: 50
 --- !u!143 &2956855689427400444
 CharacterController:
   m_ObjectHideFlags: 0
@@ -124,8 +126,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 465bd179410d8304095c8f0c0e179fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 800
-  maxArmour: 0
+  maxHealth: 100
+  maxArmour: 100
+  changeMode:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!95 &1270627508
 Animator:
   serializedVersion: 3
@@ -145,6 +150,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &789118284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2956855689427400443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4f20986bbf98dc4c8fcd80156c65503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 3290879387490275252, guid: c9628b7e210650741b7f66412b8ff46e,
+    type: 3}
+  cooldown: 0.3
 --- !u!1 &7951165106822100778
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +179,7 @@ GameObject:
   - component: {fileID: 7951165106822100782}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
