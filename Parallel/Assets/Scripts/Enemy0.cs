@@ -89,8 +89,8 @@ public class Enemy0 : MonoBehaviour {
 
     void Die() {
         // TODO tell room director that your dead
-        _agent.isStopped = true;
         _agent.destination = transform.position;
+        _agent.isStopped = true;
         _ani.SetBool("Dead", true);
         alive = false;
         GetComponent<Collider>().enabled = false;

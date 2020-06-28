@@ -58,3 +58,27 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+*.hdr
+*.tga
+Parallel/Assets/BakeryLightmaps/Level0_LMA2_RNM2.hdr
+Parallel/Assets/BakeryLightmaps/Level0_LMA2_RNM1.hdr
+Parallel/Assets/BakeryLightmaps/Level0_LMA2_RNM0.hdr
+Parallel/Assets/BakeryLightmaps/Level0_LMA2_L1z.tga
+Parallel/Assets/BakeryLightmaps/Level0_LMA2_L1y.tga
+Parallel/Assets/BakeryLightmaps/Level0_LMA2_L1x.tga
+Parallel/Assets/BakeryLightmaps/Level0_LMA2_L0.hdr
+Parallel/Assets/BakeryLightmaps/Level0_LMA1_RNM2.hdr
+Parallel/Assets/BakeryLightmaps/Level0_LMA1_RNM1.hdr
+Parallel/Assets/BakeryLightmaps/Level0_LMA1_RNM0.hdr
+Parallel/Assets/BakeryLightmaps/Level0_LMA1_L1z.tga
+Parallel/Assets/BakeryLightmaps/Level0_LMA1_L1y.tga
+Parallel/Assets/BakeryLightmaps/Level0_LMA1_L1x.tga
+Parallel/Assets/BakeryLightmaps/Level0_LMA1_L0.hdr
+Parallel/Assets/BakeryLightmaps/Level0_LM0_RNM2.hdr
+Parallel/Assets/BakeryLightmaps/Level0_LM0_RNM1.hdr
+Parallel/Assets/BakeryLightmaps/Level0_LM0_RNM0.hdr
+Parallel/Assets/BakeryLightmaps/Level0_LM0_L1z.tga
+Parallel/Assets/BakeryLightmaps/Level0_LM0_L1y.tga
+Parallel/Assets/BakeryLightmaps/Level0_LM0_L1x.tga
+Parallel/Assets/BakeryLightmaps/Level0_LM0_L0.hdr
+Parallel/Library
