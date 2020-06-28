@@ -86,17 +86,20 @@ public class Enemy2 : MonoBehaviour {
                 }
             }
         }
-        //Debug.DrawRay(transform.position, transform.forward, Color.red, 10);
-        //Debug.DrawLine(transform.position, transform.forward * meleeDistance);
     }
+
     void ChangeMode() {
         dim1 = !dim1;
+        _ani.SetBool("Mode1", !_ani.GetBool("Mode1"));
     }
+
     void RangedAttack() {
+        _ani.SetTrigger("RangedAttack");
         GameObject lazer = Instantiate(fireballPrefab, transform.position + transform.forward * 2, transform.rotation, null);
         canFire = false;
         StartCoroutine("AttackCooldown");
     }
+
     void Die() {
         // TODO tell room director that youre dead
         _agent.isStopped = true;
